@@ -661,6 +661,72 @@ function resetSearchBox() {
     getJobListings(jsonData, successFunction);
 }
 */
+function back() {
+    renderJobs();
+}
+
+
+function Redirect(url) {
+
+    //$("#jobListingsData").hide();
+    //$("#jobDescriptionContainer").show();
+    //$("#jobActionBtnContainer").show();
+    //$("#resetSearch").show();
+    document.getElementById("dump").innerHTML = "";
+    $("#jobDescriptionContainer").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
+   {
+
+       limit: 200,
+       entryTemplate: '{title}{url}{body}',
+       success: function () {
+           $("#jobListingsData").hide();
+           $("#jobDescriptionContainer").show();
+           $("#jobActionBtnContainer").show();
+           $("#resetSearch").show();
+       },
+   })
+
+}
+
+
+
+function renderJobs() {
+    $("#jobActionBtnContainer").hide();
+    document.getElementById("dump").innerHTML = "";
+    $("#dump").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
+   {
+
+       limit: 200,
+       entryTemplate: '<tr><td>{url}</td><td>{title}</td><td>{date}</td><td>{index}</td><td>{totalEntries}</td></tr>',
+       success: function () {
+           var noofentries = Number(document.getElementById("dump").getElementsByTagName("tr")[0].getElementsByTagName("td")[4].textContent);
+           var title_raw, title, Location, date_raw, date, url, i;
+           var table = '';
+           for (i = 0; i < noofentries; i++) {
+               url = document.getElementById("dump").getElementsByTagName("tr")[i].getElementsByTagName("td")[0].textContent;
+               date_raw = document.getElementById("dump").getElementsByTagName("tr")[i].getElementsByTagName("td")[2].textContent;
+               date = $.datepicker.formatDate("M d", new Date(date_raw));
+               title_raw = document.getElementById("dump").getElementsByTagName("tr")[i].getElementsByTagName("td")[1].textContent;
+               [title, Location] = title_raw.split('-');
+               //table = table + '<tr><td>' + date + '</td><td><a href="'+url+'"onClick="Redirect()">' + title + '</a></td><td>' + Location + '</td></tr>';               
+               table = table + '<tr><td>' + date + '</td><td onClick=\"Redirect(\'' + url + '\')\"> ' + title + '</td><td>' + Location + '</td></tr>';
+
+           }
+           $("#tbdy").append(table);
+           $('#dttable').DataTable({
+               "destroy": true
+               , "ordering": false
+           });
+           $('#resetSearch').hide();
+           $('#jobDescriptionContainer').hide();
+           $('#dump').hide();
+           $(".loadingIcon").hide();
+           $(".jobListingContainer").show();
+           $("#jobListingsData").show();
+       },
+   })
+}
+
 $(document).ready(function () {
 
     //$("#tbdy").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
@@ -680,30 +746,11 @@ $(document).ready(function () {
     //    },
     //});
 
-    $("#jobDescriptionContainer").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
-   {
-       limit: 50,       
-       entryTemplate: '<tr><td>{url}</td><td>{title}</td><td>{date}</td><td>{index}</td><td>{totalEntries}</td></tr>',       
-       success: function () {           
-           var noofentries = Number(document.getElementById("jobDescriptionContainer").getElementsByTagName("tr")[0].getElementsByTagName("td")[4].textContent);
-           var title_raw, title, Location, date_raw, date, url, i; 
-           var table = '';
-           for (i = 0; i < noofentries; i++) {
-               url = document.getElementById("jobDescriptionContainer").getElementsByTagName("tr")[i].getElementsByTagName("td")[0].textContent;            
-               date_raw = document.getElementById("jobDescriptionContainer").getElementsByTagName("tr")[i].getElementsByTagName("td")[2].textContent;
-               date = $.datepicker.formatDate("M d", new Date(date_raw));
-               title_raw = document.getElementById("jobDescriptionContainer").getElementsByTagName("tr")[i].getElementsByTagName("td")[1].textContent;
-               [title, Location] = title_raw.split('-');
-               table = table + '<tr><td>' + date + '</td><td><a href="'+url+'">' + title + '</a></td><td>' + Location + '</td></tr>';               
-           }
-           $("#tbdy").append(table);
-           $('#dttable').DataTable({
-              "ordering": false
-           });
-           $('#jobDescriptionContainer').hide();
-           $(".loadingIcon").hide();
-           $(".jobListingContainer").show();
-           $("#jobListingsData").show();
-       },
-   })
-}); 
+    renderJobs();
+    //$(".URL").on('click', function (event) {
+    //    debugger;
+    //    $("#dttable_wrapper").css("display:none");
+    //});
+
+});
+

@@ -5473,6 +5473,7 @@ ul.nav-tabs {
     padding-top: 15px;
     height: 70%;
     width: 100%;
+    display:inline;
 }
 
 #searchJobListing {
