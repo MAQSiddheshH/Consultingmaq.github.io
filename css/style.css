@@ -5470,7 +5470,6 @@ ul.nav-tabs {
 
 #resetSearch {
     margin-top: 0;
-    padding-top: 15px;
     height: 70%;
     width: 100%;
     display:inline;
@@ -5506,6 +5505,9 @@ ul.nav-tabs {
     width: 100%;
 }
 
+#jobDescriptionContainer{
+    margin-top: 20px;
+}
 .pager {
     padding-left: 0;
     margin: 20px 0;
@@ -5648,6 +5650,12 @@ ul.nav-tabs {
 
 .helpText {
     color: #b2b2b2 !important;
+}
+
+.row_pointer:hover {
+    cursor: pointer;
+    color: red;
+    text-decoration: underline;
 }
 
 #jobTitle {

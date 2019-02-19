@@ -666,21 +666,42 @@ function back() {
 }
 
 
-function Redirect(url) {
+function Redirect(job_id) {
 
     //$("#jobListingsData").hide();
     //$("#jobDescriptionContainer").show();
     //$("#jobActionBtnContainer").show();
     //$("#resetSearch").show();
+    $("#jobListingsData").hide();
+    $(".loadingIcon").show();
     document.getElementById("dump").innerHTML = "";
-    $("#jobDescriptionContainer").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
+    $("#dump").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
    {
 
-       limit: 200,
-       entryTemplate: '{title}{url}{body}',
+       limit: 100,
+       //entryTemplate: '{title}<span id = "url_span">{url}</span>{body}{totalEntries}',
+       entryTemplate: '<div class= "div_entries"><br><br><div class= ""><h3>{title}</h3></div><br><div class = "">{body}</div><span class = "tohide">{url}</span><span class = "tohide">{totalEntries}</span></div>',
        success: function () {
-           $("#jobListingsData").hide();
+           var noofentries = Number(document.getElementById("dump").getElementsByTagName("ul")[0].getElementsByClassName("div_entries")[0].getElementsByTagName("span")[1].textContent);
+           var url_string, url, c;
+           for (i = 0; i < noofentries; i++) {
+
+               url_string = document.getElementById("dump").getElementsByTagName("ul")[0].getElementsByClassName("div_entries")[i].getElementsByTagName("span")[0].textContent;
+               url = new URL(url_string);
+               c = url.searchParams.get("jobOrderID");
+
+               if (c == job_id) {
+
+                   document.getElementById("jobDescriptionContainer").innerHTML = document.getElementById("dump").getElementsByTagName("ul")[0].getElementsByClassName("div_entries")[i].innerHTML;
+                   //$("#url_span").hide();
+                   break;
+               }
+
+           }
+           $(".loadingIcon").hide();
            $("#jobDescriptionContainer").show();
+           $('.tohide').hide();
+           $("#url_span").hide();
            $("#jobActionBtnContainer").show();
            $("#resetSearch").show();
        },
@@ -700,7 +721,7 @@ function renderJobs() {
        entryTemplate: '<tr><td>{url}</td><td>{title}</td><td>{date}</td><td>{index}</td><td>{totalEntries}</td></tr>',
        success: function () {
            var noofentries = Number(document.getElementById("dump").getElementsByTagName("tr")[0].getElementsByTagName("td")[4].textContent);
-           var title_raw, title, Location, date_raw, date, url, i;
+           var title_raw, title, Location, date_raw, date, url, i, job_id;
            var table = '';
            for (i = 0; i < noofentries; i++) {
                url = document.getElementById("dump").getElementsByTagName("tr")[i].getElementsByTagName("td")[0].textContent;
@@ -708,8 +729,10 @@ function renderJobs() {
                date = $.datepicker.formatDate("M d", new Date(date_raw));
                title_raw = document.getElementById("dump").getElementsByTagName("tr")[i].getElementsByTagName("td")[1].textContent;
                [title, Location] = title_raw.split('-');
+               var url = new URL(url);
+               job_id = url.searchParams.get("jobOrderID");
                //table = table + '<tr><td>' + date + '</td><td><a href="'+url+'"onClick="Redirect()">' + title + '</a></td><td>' + Location + '</td></tr>';               
-               table = table + '<tr><td>' + date + '</td><td onClick=\"Redirect(\'' + url + '\')\"> ' + title + '</td><td>' + Location + '</td></tr>';
+               table = table + '<tr><td>' + job_id + '</td><td>' + date + '</td><td onClick=\"Redirect(\'' + job_id + '\')\"  class = \"row_pointer\"> ' + title + '</td><td>' + Location + '</td></tr>';
 
            }
            $("#tbdy").append(table);
@@ -728,29 +751,8 @@ function renderJobs() {
 }
 
 $(document).ready(function () {
-
-    //$("#tbdy").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
-    //{
-    //    limit: 5,
-    //    //entryTemplate: '<tr><td><a href="{url}">{title}</a></td><td>{shortBody}</td></tr>',
-    //    entryTemplate: '<tr><td><a href="{url}">{title}</a></td><td>{shortBody}</td></tr>',
-    //    layoutTemplate: '<table><tr><td></td><td></td></tr>{entries}</table>',
-    //    //layoutTemplate: '<table><tr><td></td><td></td></tr></table>',
-    //    success: function () {
-    //        //var x = document.getElementById("#dttable #tbdy").querySelectorAll("tr");
-    //        $('#dttable').DataTable();
-    //        //var x = document.getElementById("tbdy").getElementsByTagName("tr").length;        
-    //        $(".loadingIcon").hide();
-    //        $(".jobListingContainer").show();
-    //        $("#jobListingsData").show();
-    //    },
-    //});
-
     renderJobs();
-    //$(".URL").on('click', function (event) {
-    //    debugger;
-    //    $("#dttable_wrapper").css("display:none");
-    //});
+
 
 });
 
