@@ -453,27 +453,32 @@
                             <input id="searchJobListing" type="text" value="Search by Job Order #, Date Posted, Title, Location" class="helpText" title="Search by Job Order #, Date Posted, Title, Location"
                             />
                         </div>-->
-                        <div id="reset" class="col-lg-12 col-sm-12 col-xs-12">
-                            <a id="resetSearch" value='RESET' onclick="back();" class="btn btn-md btn-black-line">BACK TO JOBS</a>
+                        <div id="reset">
+                            <div class="btn_inline">
+                                <a id="resetSearch" onclick="back();" class="btn btn-md btn-black-line btn_inline">BACK TO JOBS</a>
+                            </div>
+
+                            <div class="btn_inline">
+                                <a class="btn btn-md btn-black-line" href="mailto:msjobs@maqconsulting.com">
+                                    <div class="" id="applyJobBtn">Apply Now</div>
+                                </a>
+                            </div>
+                            <div class="btn_inline">
+                                <a value="SEND TO FRIEND" class="btn btn-md btn-black-line" id="sendToFriendBtn">Share</a>
+                            </div>
+
                         </div>
                         <div id="jobListingsData"><table id="dttable" class="display"><thead><tr><th>JOB ORDER</th><th>POSTED</th><th>JOB TITLE</th><th>LOCATION</th></tr></thead><tbody id="tbdy"></table></div>
-                    </div>
-                    <div id="dump" class="row">
-                    </div>
-                    <div id="jobDescriptionContainer" class="row">
-                    </div>
-                    <div class="row">
-                        <div class="container">
-                            <div id="jobActionBtnContainer" class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
-                                <div class='col-lg-12 col-xs-12'>
-                                    <a style="width:125px;" class="btn btn-md btn-black-line" href="mailto:msjobs@maqconsulting.com">
-                                        <div class='' id='applyJobBtn'>Apply Now</div>
-                                    </a>
-                                </div>
-                                <div class='col-lg-12 col-xs-12'>
-                                    <a style="width:125px;" value='SEND TO FRIEND' class="btn btn-md btn-black-line" id='sendToFriendBtn'>Share</a>
-                                </div>
-                            </div>
+
+                        <div id="dumptable" class="hide">
+                        </div>
+                        <div id="dumpdescription" class="hide">
+                        </div>
+
+                        <div id="jobDescriptionContainer" class="row">
+                        </div>
+                        <div class="row">
+
                         </div>
                     </div>
                 </div>
