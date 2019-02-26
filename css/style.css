@@ -5564,13 +5564,13 @@ ul.nav-tabs {
 #reset {
     padding-right: 0;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     width: 100%;
     margin-bottom: 40px;
 }
 
 @media (max-width: 575px) {
-    #resetSearch {
+    #resetSearch, #jobActionBtnContainer {
         padding-top: 9px;
         height: auto;
         width: 100%;
@@ -5675,6 +5675,10 @@ ul.nav-tabs {
 #jobListings > tbody > tr > th {
     padding-bottom: 15px;
     padding-left: 15px;
+}
+
+#reset > div {
+    margin-right: 10px;
 }
 
 td {
