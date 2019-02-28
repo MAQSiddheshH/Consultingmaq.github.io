@@ -14,7 +14,7 @@ function getParameterByName(name) {
 }
 
 function redirectPowerBI() {
-    window.location.href = "/#expertise/powerbi";
+    window.location.href = "/#expertise/powerbi"; 
 }
 
 function setTabNavLinkBehavior() {
@@ -26,7 +26,7 @@ function setTabNavLinkBehavior() {
 function closeMenuIfOpen() {
     $("a, a *, section, section *, .footer, .footer *, #map, #map *").click(function () {
         if ($(this).hasClass("menu-has-sub") || $(this).hasClass("fa-angle-down") || $(this).hasClass("fa-angle-up")) {
-            return;
+            return; 
         }
         if ($(".nav-bar-icon").length && $(".nav-bar-icon").hasClass("active")) {
             $(".nav-bar-icon").removeClass("active");
@@ -455,7 +455,7 @@ function Redirect(job_id) {
             document.getElementById("jobDescriptionContainer").innerHTML = document.getElementById("dumpdescription").getElementsByTagName("ul")[0].getElementsByClassName("div_entries")[i].innerHTML;
             var sJobTitle = document.getElementById("jobDescriptionContainer").getElementsByTagName("h3")[0].innerHTML;
             sendToFriendTemplate = sendToFriendTemplate.replace("{0}", sJobTitle);
-            sendToFriendTemplate = sendToFriendTemplate.replace("{1}", "How to Apply: Please email your resume to MAQ Consulting at msjobs@maqconsulting.com with the subject of " + sJobTitle);
+            sendToFriendTemplate = sendToFriendTemplate.replace("{1}", "How to Apply: Please email your resume to MAQ Consulting at msjobs@maqconsulting.com with the subject of "+sJobTitle);
             applyJobTemplate = applyJobTemplate.replace("{0}", sJobTitle);
             document.getElementById("applyJobBtn").parentElement.setAttribute("href", applyJobTemplate);
             document.getElementById("sendToFriendBtn").setAttribute("href", sendToFriendTemplate);
@@ -483,7 +483,7 @@ $(document).ready(function () {
     $("#resetSearch").hide();
     $(".loadingIcon").show();
     $("#jobDescriptionContainer").hide();
-    //Render list of jobs in table format 
+
     $("#dumptable").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
     {
 
@@ -493,7 +493,7 @@ $(document).ready(function () {
             RenderJobs();
         },
     });
-    //Render Job Description
+
 
     $("#dumpdescription").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
      {
