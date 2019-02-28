@@ -5797,3 +5797,13 @@ td {
         font-size: 8px;
     }
 }
+
+div#dttable_filter {
+    margin-top: 3.25px;
+}
+select[aria-controls=dttable] {
+    padding-top: 3px;
+    padding-right: 2px;
+    padding-bottom: 3px;
+    padding-left: 7px;
+}
