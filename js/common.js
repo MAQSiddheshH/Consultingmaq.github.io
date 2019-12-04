@@ -439,7 +439,7 @@ function Redirect(job_id) {
     var url_string, url, c;
     for (i = 0; i < noofentries; i++) {
 
-        url_string = document.getElementById("dumpdescription").getElementsByTagName("ul")[0].getElementsByClassName("div_entries")[i].getElementsByTagName("span")[0].textContent;
+        url_string = document.getElementById("dumpdescription").getElementsByTagName("ul")[0].getElementsByClassName("div_entries")[i].getElementsByClassName("url")[0].textContent;
         url = new URL(url_string);
         c = url.searchParams.get("jobOrderID");
         url_string = url_string.toString();
@@ -494,6 +494,6 @@ $(document).ready(function () {
     $("#dumpdescription").rss("https://maqconsulting.catsone.com/xml/index.php?siteID=5046&portalID=850&subdomain=maqconsulting",
      {
          limit: 100,
-         entryTemplate: '<div class= "div_entries"><br><br><div class= ""><h3>{title}</h3></div><br><div class = "">{body}</div><span class = "tohide">{url}</span><span class = "tohide">{totalEntries}</span></div>',
+         entryTemplate: '<div class= "div_entries"><br><br><div class= ""><h3>{title}</h3></div><br><div class = "">{body}</div><span class = "tohide url">{url}</span><span class = "tohide">{totalEntries}</span></div>',
      })
 });
